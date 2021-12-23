@@ -2,12 +2,13 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const env = require('dotenv');
-
 //routes
 const userRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin/auth');
 const categoryRoutes = require('./routes/category');
 const productRoutes = require('./routes/product');
+const cardRoutes = require('./routes/cart');
+const path = require('path');
 
 
 // environment variable ( or const) 
@@ -23,10 +24,12 @@ mongoose.connect(
 
 
 app.use(express.json());
+app.use('/public', express.static(path.join(__dirname , 'uploads')));
 app.use('/api', userRoutes);
 app.use('/api', adminRoutes);
 app.use('/api', categoryRoutes);
 app.use('/api', productRoutes);
+app.use('/api', cardRoutes);
 
 
 app.listen(process.env.PORT, () => {
